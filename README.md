@@ -1,5 +1,6 @@
 # backup-script
-A python script to create a local backup of your projects, either by manually launching or though git hooks. Utilizes your gitignore in the backup.
+A python script to create a local backup of your projects, either by manually launching or though git hooks. 
+- By default the backup does not utilize the gitignore, but if you would like to then open the .py files and change gitignore = False to gitignore = True
 ### Prerequisite
 Both of these scripts rely on __GitPython__. If you do not have it installed please follow their install instructions [here](https://gitpython.readthedocs.io/en/stable/intro.html).
 ## Manual Script (backupscript.py)
