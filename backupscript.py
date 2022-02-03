@@ -10,9 +10,11 @@ import shutil
 source = ""
 # DRIVE YOU WANT TO SAVE TO | YOU CAN EXTEND THE PATH IF YOU WOULD LIKE
 destinationdrive = "D:/"
+# USE GITIGNORE?
+gitignore = False
 
 # CALLS FUNCTIONS
-def Main(source, destinationdrive):
+def Main(source, destinationdrive, gitignore):
     # GETS PROJECT (FOLDER) NAMES IN SOURCE DIRECTORY, AND HAS YOU PICK WHICH ONE TO BACKUP
     projectchoice = ChooseProject(source)
     # ADDS THE PROJECT (FOLDER) NAME TO THE SOURCE DIRECTORY
@@ -27,7 +29,10 @@ def Main(source, destinationdrive):
     # GETS COMMIT DATA FROM REPOSITORY
     commit = repo.head.commit
     # READS YOUR GITIGNORE AND PUTS THE DATA IN A LIST
-    ignorelist = IgnoreList(source)
+    if gitignore:
+        ignorelist = IgnoreList(source)
+    else:
+        ignorelist = []
     # SETS THE DESTINATION FOR THE BACKUP
     dest = SetDestinationGit(destinationdrive, repo, commit, projectchoice, now)
     # COPIES THE PROJECT AND GETS THE TIME TAKEN
@@ -128,7 +133,7 @@ def SetDestinationGit(destinationdrive, repo, commit, projectchoice, now):
                 if newname.startswith('y'):
                     return destinationdrive + projectchoice + "_Backup/" + str(repo.active_branch.name) + "/" + datetimestring + "_" + input("Give the backup a summary: ")
                 elif newname.startswith('n'):
-                    cancelbackup = input("Would you like to cancel with backup? ").lower()
+                    cancelbackup = input("Would you like to cancel the backup? ").lower()
                     if cancelbackup.startswith('y'):
                         sys.exit()
                     elif cancelbackup.startswith('n'):
@@ -180,4 +185,4 @@ def GitLog(repo, commit, dest, now, timeelapsed):
         input("ERROR: Could not write log in destination directory. Press ENTER to exit.")
         sys.exit()
 
-Main(source, destinationdrive)
+Main(source, destinationdrive, gitignore)

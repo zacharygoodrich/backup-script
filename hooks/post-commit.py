@@ -8,6 +8,8 @@ import shutil
 
 # DRIVE YOU WANT TO SAVE TO | YOU CAN EXTEND THE PATH IF YOU WOULD LIKE
 destinationdrive = "D:/"
+# USE GITIGNORE?
+gitignore = False
 
 # CALLS FUNCTIONS
 def Main(destinationdrive):
@@ -22,7 +24,10 @@ def Main(destinationdrive):
     # GETS COMMIT DATA FROM REPOSITORY
     commit = repo.head.commit
     # READS YOUR GITIGNORE AND PUTS THE DATA IN A LIST
-    ignorelist = IgnoreList(source)
+    if gitignore:
+        ignorelist = IgnoreList(source)
+    else:
+        ignorelist = []
     # SETS THE DESTINATION FOR THE BACKUP
     dest = SetDestination(destinationdrive, repo, commit, projectchoice, now)
     # COPIES THE PROJECT AND GETS THE TIME TAKEN
